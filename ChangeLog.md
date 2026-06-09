@@ -1,5 +1,8 @@
 # Changelog
 
+## Version [5.2.0](https://github.com/CedX/Akismet.net/compare/v5.1.0...v5.2.0)
+- Added explicit conversions from the `Author`, `Blog` and `Comment` classes to a `Hashtable`.
+
 ## Version [5.1.0](https://github.com/CedX/Akismet.net/compare/v5.0.0...v5.1.0)
 - Added the `cancellationToken` parameter to the synchronous methods of the `Client` class.
 - Added explicit conversions from the `Author`, `Blog` and `Comment` classes to a `Dictionary<string, string>`.
