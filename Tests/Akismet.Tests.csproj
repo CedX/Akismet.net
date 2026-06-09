@@ -4,7 +4,7 @@
 		<Copyright>© Cédric Belin</Copyright>
 		<Description>Prevent comment spam using the Akismet service.</Description>
 		<Product>Akismet for .NET</Product>
-		<Version>5.1.0</Version>
+		<Version>5.2.0</Version>
 	</PropertyGroup>
 
 	<PropertyGroup>
