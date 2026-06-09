@@ -1,5 +1,6 @@
 namespace Belin.Akismet;
 
+using System.Collections;
 using System.Net;
 
 /// <summary>
@@ -58,6 +59,13 @@ public sealed class Author(IPAddress ipAddress) {
 		if (!string.IsNullOrWhiteSpace(author.UserAgent)) dictionary["user_agent"] = author.UserAgent;
 		return dictionary;
 	}
+
+	/// <summary>
+	/// Converts the specified author to a hash table.
+	/// </summary>
+	/// <param name="author">The author to convert.</param>
+	/// <returns>The hash table corresponding to the specified author.</returns>
+	public static explicit operator Hashtable(Author author) => new((Dictionary<string, string>) author);
 }
 
 /// <summary>

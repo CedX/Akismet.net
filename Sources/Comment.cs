@@ -1,5 +1,7 @@
 namespace Belin.Akismet;
 
+using System.Collections;
+
 /// <summary>
 /// Represents a comment submitted by an author.
 /// </summary>
@@ -68,6 +70,13 @@ public sealed class Comment(Author author) {
 		if (!string.IsNullOrWhiteSpace(comment.Type)) map["comment_type"] = comment.Type;
 		return map;
 	}
+
+	/// <summary>
+	/// Converts the specified comment to a hash table.
+	/// </summary>
+	/// <param name="comment">The comment to convert.</param>
+	/// <returns>The hash table corresponding to the specified comment.</returns>
+	public static explicit operator Hashtable(Comment comment) => new((Dictionary<string, string>) comment);
 }
 
 /// <summary>

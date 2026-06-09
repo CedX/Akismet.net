@@ -1,5 +1,6 @@
 namespace Belin.Akismet;
 
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
@@ -41,6 +42,13 @@ public sealed class Blog(Uri url) {
 		if (blog.Languages.Count > 0) dictionary["blog_lang"] = string.Join(',', blog.Languages);
 		return dictionary;
 	}
+
+	/// <summary>
+	/// Converts the specified blog to a hash table.
+	/// </summary>
+	/// <param name="blog">The blog to convert.</param>
+	/// <returns>The hash table corresponding to the specified blog.</returns>
+	public static explicit operator Hashtable(Blog blog) => new((Dictionary<string, string>) blog);
 
 	/// <summary>
 	/// Creates a new blog from the specified string.
