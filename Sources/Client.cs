@@ -153,7 +153,8 @@ public class Client(string apiKey, Blog blog, Uri? baseUrl = null) {
 		using var httpClient = new HttpClient();
 		httpClient.DefaultRequestHeaders.Add("User-Agent", UserAgent);
 
-		var response = await httpClient.PostAsync(new Uri(BaseUrl, endpoint), new FormUrlEncodedContent(body), cancellationToken);
+		using var httpContent = new FormUrlEncodedContent(body);
+		var response = await httpClient.PostAsync(new Uri(BaseUrl, endpoint), httpContent, cancellationToken);
 		response.EnsureSuccessStatusCode();
 		if (response.Headers.TryGetValues("X-akismet-alert-msg", out var alertMessages)) throw new HttpRequestException(alertMessages.First());
 		if (response.Headers.TryGetValues("X-akismet-debug-help", out var debugHelps)) throw new HttpRequestException(debugHelps.First());
