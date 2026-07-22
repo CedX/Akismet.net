@@ -67,14 +67,3 @@ public sealed class Author(IPAddress ipAddress) {
 	/// <returns>The hash table corresponding to the specified author.</returns>
 	public static explicit operator Hashtable(Author author) => new((Dictionary<string, string>) author);
 }
-
-/// <summary>
-/// Specifies the role of an author.
-/// </summary>
-public static class AuthorRole {
-
-	/// <summary>
-	/// The author is an administrator.
-	/// </summary>
-	public const string Administrator = "administrator";
-}
