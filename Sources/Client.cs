@@ -72,8 +72,8 @@ public class Client(string apiKey, Blog blog, Uri? baseUrl = null) {
 	public async Task<CheckResult> CheckCommentAsync(Comment comment, CancellationToken cancellationToken = default) {
 		using var response = await Fetch("1.1/comment-check", (Dictionary<string, string>) comment, cancellationToken);
 		if (await response.Content.ReadAsStringAsync(cancellationToken) == "false") return CheckResult.Ham;
-		if (!response.Headers.TryGetValues("X-akismet-pro-tip", out var proTips)) return CheckResult.Spam;
-		return proTips.First() == "discard" ? CheckResult.PervasiveSpam : CheckResult.Spam;
+		if (!response.Headers.TryGetValues("X-akismet-pro-tip", out var proTip)) return CheckResult.Spam;
+		return proTip.First() == "discard" ? CheckResult.PervasiveSpam : CheckResult.Spam;
 	}
 
 	/// <summary>
@@ -156,8 +156,8 @@ public class Client(string apiKey, Blog blog, Uri? baseUrl = null) {
 		using var httpContent = new FormUrlEncodedContent(body);
 		var response = await httpClient.PostAsync(new Uri(BaseUrl, endpoint), httpContent, cancellationToken);
 		response.EnsureSuccessStatusCode();
-		if (response.Headers.TryGetValues("X-akismet-alert-msg", out var alertMessages)) throw new HttpRequestException(alertMessages.First());
-		if (response.Headers.TryGetValues("X-akismet-debug-help", out var debugHelps)) throw new HttpRequestException(debugHelps.First());
+		if (response.Headers.TryGetValues("X-akismet-alert-msg", out var alertMessage)) throw new HttpRequestException(alertMessage.First());
+		if (response.Headers.TryGetValues("X-akismet-debug-help", out var debugHelp)) throw new HttpRequestException(debugHelp.First());
 		return response;
 	}
 }
