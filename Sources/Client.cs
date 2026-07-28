@@ -150,7 +150,7 @@ public class Client(string apiKey, Blog blog, Uri? baseUrl = null) {
 		if (IsTest) body.Add("is_test", "1");
 		if (fields is not null) foreach (var field in fields) body.Add(field.Key, field.Value);
 
-		using var httpClient = new HttpClient();
+		using var httpClient = new HttpClient { Timeout = TimeSpan.FromMinutes(1) };
 		httpClient.DefaultRequestHeaders.Add("User-Agent", UserAgent);
 
 		using var httpContent = new FormUrlEncodedContent(body);
