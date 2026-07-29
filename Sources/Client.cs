@@ -1,14 +1,11 @@
 namespace Belin.Akismet;
 
-using System.Diagnostics.CodeAnalysis;
-
 /// <summary>
 /// Submits comments to the Akismet service.
 /// </summary>
 /// <param name="apiKey">The Akismet API key.</param>
 /// <param name="blog">The front page or home URL of the instance making requests.</param>
-/// <param name="baseUrl">The base URL of the remote API endpoint.</param>
-public class Client(string apiKey, Blog blog, Uri? baseUrl = null) {
+public class Client(string apiKey, Blog blog) {
 
 	/// <summary>
 	/// The response returned by the <c>submit-ham</c> and <c>submit-spam</c> endpoints when the outcome is a success.
@@ -28,7 +25,7 @@ public class Client(string apiKey, Blog blog, Uri? baseUrl = null) {
 	/// <summary>
 	/// The base URL of the remote API endpoint.
 	/// </summary>
-	public Uri BaseUrl { get; set; } = baseUrl ?? new Uri("https://rest.akismet.com/");
+	public Uri BaseUrl { get; set; } = new Uri("https://rest.akismet.com/");
 
 	/// <summary>
 	/// The front page or home URL of the instance making requests.
@@ -44,15 +41,6 @@ public class Client(string apiKey, Blog blog, Uri? baseUrl = null) {
 	/// The user agent string to use when making requests.
 	/// </summary>
 	public string UserAgent { get; set; } = $".NET/{Environment.Version} | Belin.Akismet/{Version.ToString(3)}";
-
-	/// <summary>
-	/// Creates a new client.
-	/// </summary>
-	/// <param name="apiKey">The Akismet API key.</param>
-	/// <param name="blog">The front page or home URL of the instance making requests.</param>
-	/// <param name="baseUrl">The base URL of the remote API endpoint.</param>
-	public Client(string apiKey, Blog blog, [StringSyntax(StringSyntaxAttribute.Uri)] string baseUrl):
-		this(apiKey, blog, new Uri(baseUrl, UriKind.Absolute)) {}
 
 	/// <summary>
 	/// Checks the specified comment against the service database, and returns a value indicating whether it is spam.
