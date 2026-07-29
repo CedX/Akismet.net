@@ -139,22 +139,22 @@ public class Client(string apiKey, Blog blog, Uri? baseUrl = null) {
 	/// <summary>
 	/// Queries the service by posting the specified fields to a given end point, and returns the response.
 	/// </summary>
-	/// <param name="endpoint">The relative URL of the end point to query.</param>
+	/// <param name="requestUri">The relative URI of the end point to query.</param>
 	/// <param name="fields">The fields describing the query body.</param>
 	/// <param name="cancellationToken">The token to cancel the operation.</param>
 	/// <returns>The server response.</returns>
 	/// <exception cref="HttpRequestException">An error occurred while querying the end point.</exception>
-	private async Task<HttpResponseMessage> PostAsync(string endpoint, IDictionary<string, string>? fields = null, CancellationToken cancellationToken = default) {
+	private async Task<HttpResponseMessage> PostAsync(string requestUri, IDictionary<string, string>? fields = null, CancellationToken cancellationToken = default) {
 		var body = (Dictionary<string, string>) Blog;
 		body.Add("api_key", ApiKey);
 		if (IsTest) body.Add("is_test", "1");
 		if (fields is not null) foreach (var field in fields) body.Add(field.Key, field.Value);
 
-		using var httpClient = new HttpClient { Timeout = TimeSpan.FromMinutes(1) };
+		using var httpClient = new HttpClient { BaseAddress = BaseUrl, Timeout = TimeSpan.FromMinutes(1) };
 		httpClient.DefaultRequestHeaders.Add("User-Agent", UserAgent);
 
 		using var httpContent = new FormUrlEncodedContent(body);
-		var response = await httpClient.PostAsync(new Uri(BaseUrl, endpoint), httpContent, cancellationToken);
+		var response = await httpClient.PostAsync(requestUri, httpContent, cancellationToken);
 		response.EnsureSuccessStatusCode();
 		if (response.Headers.TryGetValues("X-akismet-alert-msg", out var alertMessage)) throw new HttpRequestException(alertMessage.First());
 		if (response.Headers.TryGetValues("X-akismet-debug-help", out var debugHelp)) throw new HttpRequestException(debugHelp.First());
