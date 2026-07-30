@@ -1,5 +1,7 @@
 namespace Belin.Akismet;
 
+using System.Net;
+
 /// <summary>
 /// Submits comments to the Akismet service.
 /// </summary>
@@ -138,14 +140,14 @@ public class Client(string apiKey, Blog blog) {
 		if (IsTest) body.Add("is_test", "1");
 		if (fields is not null) foreach (var field in fields) body.Add(field.Key, field.Value);
 
-		using var httpClient = new HttpClient { BaseAddress = BaseUrl, Timeout = TimeSpan.FromMinutes(1) };
-		httpClient.DefaultRequestHeaders.Add("User-Agent", UserAgent);
+		using var client = new HttpClient { BaseAddress = BaseUrl, Timeout = TimeSpan.FromMinutes(1) };
+		client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
 
-		using var httpContent = new FormUrlEncodedContent(body);
-		var response = await httpClient.PostAsync(requestUri, httpContent, cancellationToken);
-		response.EnsureSuccessStatusCode();
-		if (response.Headers.TryGetValues("X-akismet-alert-msg", out var alertMessage)) throw new HttpRequestException(alertMessage.First());
-		if (response.Headers.TryGetValues("X-akismet-debug-help", out var debugHelp)) throw new HttpRequestException(debugHelp.First());
+		using var content = new FormUrlEncodedContent(body);
+		var response = (await client.PostAsync(requestUri, content, cancellationToken)).EnsureSuccessStatusCode();
+		var statusCode = HttpStatusCode.BadRequest;
+		if (response.Headers.TryGetValues("X-akismet-alert-msg", out var alertMessage)) throw new HttpRequestException(alertMessage.First(), inner: null, statusCode);
+		if (response.Headers.TryGetValues("X-akismet-debug-help", out var debugHelp)) throw new HttpRequestException(debugHelp.First(), inner: null, statusCode);
 		return response;
 	}
 }
