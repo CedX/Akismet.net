@@ -31,7 +31,7 @@
 
 	<ItemGroup>
 		<InternalsVisibleTo Include="$(AssemblyName).Tests" />
-		<None Include="../Icon.png" Pack="true" PackagePath="" />
-		<None Include="../ReadMe.md" Pack="true" PackagePath="" />
+		<None Include="../Icon.png" Pack="true" PackagePath="/" />
+		<None Include="../ReadMe.md" Pack="true" PackagePath="/" />
 	</ItemGroup>
 </Project>
