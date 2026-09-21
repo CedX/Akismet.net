@@ -23,6 +23,6 @@ dotnet package add Belin.Akismet
 ### 2. Import it
 Now in your [C#](https://learn.microsoft.com/en-us/dotnet/csharp) code, you can use:
 
-```cs
+```csharp
 using Belin.Akismet;
 ```

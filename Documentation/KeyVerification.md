@@ -7,7 +7,7 @@ if you will have multiple users with their own Akismet subscriptions using your 
 
 See the [Akismet API documentation](https://akismet.com/developers/detailed-docs/key-verification) for more information.
 
-```cs
+```csharp
 Task<bool> Client.VerifyKey(CancellationToken cancellationToken = default)
 ```
 
@@ -28,7 +28,7 @@ See [Response Error Codes](https://akismet.com/developers/detailed-docs/errors) 
 
 ## Example
 
-```cs
+```csharp
 using Belin.Akismet;
 using System.Net.Http;
 

@@ -7,7 +7,7 @@ that any values you're passing here match up with the original and corresponding
 
 See the [Akismet API documentation](https://akismet.com/developers/detailed-docs/submit-ham-false-positives) for more information.
 
-```cs
+```csharp
 Task Client.SubmitHam(Comment comment, CancellationToken cancellationToken = default)
 ```
 
@@ -33,7 +33,7 @@ It can also fault with a custom error message (provided by the `X-akismet-alert-
 See [Response Error Codes](https://akismet.com/developers/detailed-docs/errors) for more information.
 
 ## Example
-```cs
+```csharp
 using Belin.Akismet;
 using System.Net.Http;
 

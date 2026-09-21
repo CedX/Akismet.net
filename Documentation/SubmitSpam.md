@@ -9,7 +9,7 @@ you should ensure that the values that you do send match those of the original c
 
 See the [Akismet API documentation](https://akismet.com/developers/detailed-docs/submit-spam-missed-spam) for more information.
 
-```cs
+```csharp
 Task Client.SubmitSpam(Comment comment, CancellationToken cancellationToken = default)
 ```
 
@@ -35,7 +35,7 @@ It can also fault with a custom error message (provided by the `X-akismet-alert-
 See [Response Error Codes](https://akismet.com/developers/detailed-docs/errors) for more information.
 
 ## Example
-```cs
+```csharp
 using Belin.Akismet;
 using System.Net.Http;
 
