@@ -31,5 +31,11 @@ dotnet_style_namespace_match_folder = false
 [*.md]
 trim_trailing_whitespace = false
 
+[*.{fs,fsx}]
+indent_style = space
+
+[*.md]
+trim_trailing_whitespace = false
+
 [*.{yaml,yml}]
 indent_style = space
