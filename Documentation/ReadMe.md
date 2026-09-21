@@ -9,7 +9,7 @@ Add Akismet to your [.NET](https://dotnet.microsoft.com) applications so you don
 ## Quick start
 Install the latest version of **Akismet for .NET** with [NuGet](https://www.nuget.org) package manager:
 
-```shell
+```powershell
 dotnet package add Belin.Akismet
 ```
 
