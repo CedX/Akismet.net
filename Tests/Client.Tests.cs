@@ -38,7 +38,7 @@ public sealed class ClientTests {
 			Name = "Akismet",
 			Role = AuthorRole.Administrator,
 			Url = new Uri("https://cedric-belin.fr"),
-			UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+			UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0"
 		};
 
 		ham = new Comment(author) {
