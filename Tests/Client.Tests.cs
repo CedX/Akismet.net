@@ -62,10 +62,10 @@ public sealed class ClientTests {
 
 	[TestMethod]
 	public async Task CheckComment() {
-		AreEqual(CheckResult.Ham, await client.CheckCommentAsync(ham, testContext.CancellationToken));
+		Assert.AreEqual(CheckResult.Ham, await client.CheckCommentAsync(ham, testContext.CancellationToken));
 
 		var result = await client.CheckCommentAsync(spam, testContext.CancellationToken);
-		IsTrue(result == CheckResult.Spam || result == CheckResult.PervasiveSpam);
+		Assert.IsTrue(result == CheckResult.Spam || result == CheckResult.PervasiveSpam);
 	}
 
 	[TestMethod]
@@ -78,9 +78,9 @@ public sealed class ClientTests {
 
 	[TestMethod]
 	public async Task VerifyKey() {
-		IsTrue(await client.VerifyKeyAsync(testContext.CancellationToken));
+		Assert.IsTrue(await client.VerifyKeyAsync(testContext.CancellationToken));
 
 		var newClient = new Client("0123456789AB", client.Blog) { IsTest = true };
-		IsFalse(await newClient.VerifyKeyAsync(testContext.CancellationToken));
+		Assert.IsFalse(await newClient.VerifyKeyAsync(testContext.CancellationToken));
 	}
 }

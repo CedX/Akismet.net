@@ -10,8 +10,8 @@ public sealed class AuthorTests {
 	public void ToDictionary() {
 		// It should return only the IP address with a newly created instance.
 		var dictionary = (Dictionary<string, string>) new Author(ipAddress: "127.0.0.1");
-		HasCount(1, dictionary);
-		AreEqual("127.0.0.1", dictionary["user_ip"]);
+		Assert.HasCount(1, dictionary);
+		Assert.AreEqual("127.0.0.1", dictionary["user_ip"]);
 
 		// It should return a non-empty map with an initialized instance.
 		var author = new Author(ipAddress: "192.168.0.1") {
@@ -22,11 +22,11 @@ public sealed class AuthorTests {
 		};
 
 		dictionary = (Dictionary<string, string>) author;
-		HasCount(5, dictionary);
-		AreEqual("Cédric Belin", dictionary["comment_author"]);
-		AreEqual("contact@cedric-belin.fr", dictionary["comment_author_email"]);
-		AreEqual("https://cedric-belin.fr/", dictionary["comment_author_url"]);
-		AreEqual("Mozilla/5.0", dictionary["user_agent"]);
-		AreEqual("192.168.0.1", dictionary["user_ip"]);
+		Assert.HasCount(5, dictionary);
+		Assert.AreEqual("Cédric Belin", dictionary["comment_author"]);
+		Assert.AreEqual("contact@cedric-belin.fr", dictionary["comment_author_email"]);
+		Assert.AreEqual("https://cedric-belin.fr/", dictionary["comment_author_url"]);
+		Assert.AreEqual("Mozilla/5.0", dictionary["user_agent"]);
+		Assert.AreEqual("192.168.0.1", dictionary["user_ip"]);
 	}
 }
