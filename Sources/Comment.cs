@@ -59,16 +59,16 @@ public sealed class Comment(Author author) {
 	/// <param name="comment">The comment to convert.</param>
 	/// <returns>The dictionary corresponding to the specified comment.</returns>
 	public static explicit operator Dictionary<string, string>(Comment comment) {
-		var map = (Dictionary<string, string>) comment.Author;
-		if (!string.IsNullOrWhiteSpace(comment.Content)) map["comment_content"] = comment.Content;
+		var dictionary = (Dictionary<string, string>) comment.Author;
+		if (!string.IsNullOrWhiteSpace(comment.Content)) dictionary["comment_content"] = comment.Content;
 		// TODO if (comment.Context.Count > 0) map["comment_context"] = string.Join(',', comment.Context);
-		if (comment.Date is not null) map["comment_date_gmt"] = comment.Date.Value.ToUniversalTime().ToString("o");
-		if (comment.Permalink is not null) map["permalink"] = comment.Permalink.ToString();
-		if (comment.PostModified is not null) map["comment_post_modified_gmt"] = comment.PostModified.Value.ToUniversalTime().ToString("o");
-		if (!string.IsNullOrWhiteSpace(comment.RecheckReason)) map["recheck_reason"] = comment.RecheckReason;
-		if (comment.Referrer is not null) map["referrer"] = comment.Referrer.ToString();
-		if (!string.IsNullOrWhiteSpace(comment.Type)) map["comment_type"] = comment.Type;
-		return map;
+		if (comment.Date is not null) dictionary["comment_date_gmt"] = comment.Date.Value.ToUniversalTime().ToString("o");
+		if (comment.Permalink is not null) dictionary["permalink"] = comment.Permalink.ToString();
+		if (comment.PostModified is not null) dictionary["comment_post_modified_gmt"] = comment.PostModified.Value.ToUniversalTime().ToString("o");
+		if (!string.IsNullOrWhiteSpace(comment.RecheckReason)) dictionary["recheck_reason"] = comment.RecheckReason;
+		if (comment.Referrer is not null) dictionary["referrer"] = comment.Referrer.ToString();
+		if (!string.IsNullOrWhiteSpace(comment.Type)) dictionary["comment_type"] = comment.Type;
+		return dictionary;
 	}
 
 	/// <summary>
