@@ -19,8 +19,8 @@ try {
 	};
 
 	var blog = new Blog("https://www.yourblog.com") { Charset = Encoding.UTF8, Languages = ["fr"] };
-	var result = await new Client("123YourAPIKey", blog).CheckCommentAsync(comment);
-	Console.WriteLine(result == CheckResult.Ham ? "The comment is ham." : "The comment is spam.");
+	using var client = new Client("123YourAPIKey", blog);
+	Console.WriteLine(client.CheckComment(comment) == CheckResult.Ham ? "The comment is ham." : "The comment is spam.");
 }
 catch (HttpRequestException e) {
 	Console.Error.WriteLine($"An error occurred: {e.Message}");
