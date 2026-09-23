@@ -1,5 +1,9 @@
 # Changelog
 
+## Version [6.0.0](https://github.com/CedX/Akismet.net/compare/v5.2.1...v6.0.0)
+- Breaking change: the `Client` class now implements the `IDisposable` interface.
+- Uses a single HTTP client instance to make all requests.
+
 ## Version [5.2.1](https://github.com/CedX/Akismet.net/compare/v5.2.0...v5.2.1)
 - Added a package icon.
 
