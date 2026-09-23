@@ -7,7 +7,7 @@ try {
 	var comment = new Comment(author) { Content = "I'm testing out the Service API." };
 
 	using var client = new Client("123YourAPIKey", "https://www.yourblog.com");
-	client.SubmitHam(comment);
+	await client.SubmitHamAsync(comment);
 	Console.WriteLine("The comment was successfully submitted as ham.");
 }
 catch (HttpRequestException e) {

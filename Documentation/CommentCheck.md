@@ -10,7 +10,7 @@ so artificially generating spam comments is not a viable approach.
 See the [Akismet API documentation](https://akismet.com/developers/detailed-docs/comment-check) for more information.
 
 ```csharp
-Task<CheckResult> Client.CheckComment(Comment comment, CancellationToken cancellationToken = default)
+Task<CheckResult> Client.CheckCommentAsync(Comment comment, CancellationToken cancellationToken = default)
 ```
 
 ## Parameters
@@ -56,8 +56,8 @@ try {
   };
 
   var blog = new Blog("https://www.yourblog.com") { Charset = Encoding.UTF8, Languages = ["fr"] };
-  var result = await new Client("123YourAPIKey", blog).CheckComment(comment);
-  Console.WriteLine(result == CheckResult.Ham ? "The comment is ham." : "The comment is spam.");
+  using var client = new Client("123YourAPIKey", blog);
+  Console.WriteLine(await client.CheckCommentAsync(comment) == CheckResult.Ham ? "The comment is ham." : "The comment is spam.");
 }
 catch (HttpRequestException e) {
   Console.Error.WriteLine($"An error occurred: {e.Message}");

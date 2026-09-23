@@ -7,7 +7,7 @@ try {
 	var comment = new Comment(author) { Content = "Spam!" };
 
 	using var client = new Client("123YourAPIKey", "https://www.yourblog.com");
-	client.SubmitSpam(comment);
+	await client.SubmitSpamAsync(comment);
 	Console.WriteLine("The comment was successfully submitted as spam.");
 }
 catch (HttpRequestException e) {

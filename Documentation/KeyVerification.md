@@ -8,7 +8,7 @@ if you will have multiple users with their own Akismet subscriptions using your 
 See the [Akismet API documentation](https://akismet.com/developers/detailed-docs/key-verification) for more information.
 
 ```csharp
-Task<bool> Client.VerifyKey(CancellationToken cancellationToken = default)
+Task<bool> Client.VerifyKeyAsync(CancellationToken cancellationToken = default)
 ```
 
 ## Parameters
@@ -33,9 +33,8 @@ using Belin.Akismet;
 using System.Net.Http;
 
 try {
-  var client = new Client("123YourAPIKey", "https://www.yourblog.com");
-  var isValid = await client.VerifyKey();
-  Console.WriteLine(isValid ? "The API key is valid." : "The API key is invalid.");
+  using var client = new Client("123YourAPIKey", "https://www.yourblog.com");
+  Console.WriteLine(await client.VerifyKeyAsync() ? "The API key is valid." : "The API key is invalid.");
 }
 catch (HttpRequestException e) {
   Console.Error.WriteLine($"An error occurred: {e.Message}");

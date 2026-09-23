@@ -10,7 +10,7 @@ you should ensure that the values that you do send match those of the original c
 See the [Akismet API documentation](https://akismet.com/developers/detailed-docs/submit-spam-missed-spam) for more information.
 
 ```csharp
-Task Client.SubmitSpam(Comment comment, CancellationToken cancellationToken = default)
+Task Client.SubmitSpamAysnc(Comment comment, CancellationToken cancellationToken = default)
 ```
 
 ## Parameters
@@ -43,9 +43,8 @@ try {
   var author = new Author(ipAddress: "192.168.123.456") { UserAgent = "Spam Bot/6.6.6" };
   var comment = new Comment(author) { Content = "Spam!" };
 
-  var client = new Client("123YourAPIKey", "https://www.yourblog.com");
-  await client.SubmitSpam(comment);
-
+  using var client = new Client("123YourAPIKey", "https://www.yourblog.com");
+  await client.SubmitSpamAsync(comment);
   Console.WriteLine("The comment was successfully submitted as spam.");
 }
 catch (HttpRequestException e) {

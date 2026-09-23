@@ -20,7 +20,7 @@ try {
 
 	var blog = new Blog("https://www.yourblog.com") { Charset = Encoding.UTF8, Languages = ["fr"] };
 	using var client = new Client("123YourAPIKey", blog);
-	Console.WriteLine(client.CheckComment(comment) == CheckResult.Ham ? "The comment is ham." : "The comment is spam.");
+	Console.WriteLine(await client.CheckCommentAsync(comment) == CheckResult.Ham ? "The comment is ham." : "The comment is spam.");
 }
 catch (HttpRequestException e) {
 	Console.Error.WriteLine($"An error occurred: {e.Message}");

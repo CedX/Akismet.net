@@ -18,10 +18,10 @@ var author = new Author(ipAddress: "127.0.0.1") {
   UserAgent = "Mozilla/5.0"
 };
 
-var client = new Client("123YourAPIKey", "https://www.yourblog.com");
+using var client = new Client("123YourAPIKey", "https://www.yourblog.com");
 var comment = new Comment(author) { Content = "A user comment." };
 
-var result = await client.CheckComment(comment);
+var result = await client.CheckCommentAsync(comment);
 Console.WriteLine($"It should be `CheckResult.Spam`: {result}");
 ```
 
@@ -39,10 +39,10 @@ var author = new Author(ipAddress: "127.0.0.1") {
   UserAgent = "Mozilla/5.0"
 };
 
-var client = new Client("123YourAPIKey", "https://www.yourblog.com");
+using var client = new Client("123YourAPIKey", "https://www.yourblog.com");
 var comment = new Comment(author) { Content = "A user comment." };
 
-var result = await client.CheckComment(comment);
+var result = await client.CheckCommentAsync(comment);
 Console.WriteLine($"It should be `CheckResult.Ham`: {result}");
 ```
 
@@ -59,6 +59,6 @@ var author = new Author(ipAddress: "127.0.0.1") { UserAgent = "Mozilla/5.0" };
 var comment = new Comment(author) { Content = "A user comment." };
 
 // It should not influence subsequent calls.
-var client = new Client("123YourAPIKey", "https://www.yourblog.com") { IsTest = true };
-await client.CheckComment(comment);
+using var client = new Client("123YourAPIKey", "https://www.yourblog.com") { IsTest = true };
+await client.CheckCommentAsync(comment);
 ```
