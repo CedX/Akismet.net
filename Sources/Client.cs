@@ -7,7 +7,7 @@ using System.Net;
 /// </summary>
 /// <param name="apiKey">The Akismet API key.</param>
 /// <param name="blog">The front page or home URL of the instance making requests.</param>
-public class Client(string apiKey, Blog blog) {
+public class Client(string apiKey, Blog blog): IDisposable {
 
 	/// <summary>
 	/// The response returned by the <c>submit-ham</c> and <c>submit-spam</c> endpoints when the outcome is a success.
@@ -17,7 +17,7 @@ public class Client(string apiKey, Blog blog) {
 	/// <summary>
 	/// The assembly version.
 	/// </summary>
-	private static Version Version => typeof(Client).Assembly.GetName().Version!;
+	private static readonly Version Version = typeof(Client).Assembly.GetName().Version!;
 
 	/// <summary>
 	/// The Akismet API key.
@@ -27,7 +27,7 @@ public class Client(string apiKey, Blog blog) {
 	/// <summary>
 	/// The base URL of the remote API endpoint.
 	/// </summary>
-	public Uri BaseUrl { get; set; } = new Uri("https://rest.akismet.com/");
+	public Uri BaseUrl { get; set; } = new("https://rest.akismet.com/");
 
 	/// <summary>
 	/// The front page or home URL of the instance making requests.
@@ -43,6 +43,16 @@ public class Client(string apiKey, Blog blog) {
 	/// The user agent string to use when making requests.
 	/// </summary>
 	public string UserAgent { get; set; } = $".NET/{Environment.Version} | Belin.Akismet/{Version.ToString(3)}";
+
+	/// <summary>
+	/// Value indicating whether this object has been disposed.
+	/// </summary>
+	private bool disposed;
+
+	/// <summary>
+	/// The underlying HTTP client.
+	/// </summary>
+	private readonly HttpClient httpClient = new() { Timeout = TimeSpan.FromMinutes(1) };
 
 	/// <summary>
 	/// Checks the specified comment against the service database, and returns a value indicating whether it is spam.
@@ -64,6 +74,14 @@ public class Client(string apiKey, Blog blog) {
 		if (await response.Content.ReadAsStringAsync(cancellationToken) == "false") return CheckResult.Ham;
 		if (!response.Headers.TryGetValues("X-akismet-pro-tip", out var proTip)) return CheckResult.Spam;
 		return proTip.First() == "discard" ? CheckResult.PervasiveSpam : CheckResult.Spam;
+	}
+
+	/// <summary>
+	/// Releases any resources associated with this object.
+	/// </summary>
+	public void Dispose() {
+		Dispose(disposing: true);
+		GC.SuppressFinalize(this);
 	}
 
 	/// <summary>
@@ -127,6 +145,16 @@ public class Client(string apiKey, Blog blog) {
 	}
 
 	/// <summary>
+	/// Releases any resources associated with this object.
+	/// </summary>
+	/// <param name="disposing">Value indicating whether this object is currently being disposed.</param>
+	protected virtual void Dispose(bool disposing) {
+		if (disposed) return;
+		if (disposing) httpClient.Dispose();
+		disposed = true;
+	}
+
+	/// <summary>
 	/// Queries the service by posting the specified fields to a given end point, and returns the response.
 	/// </summary>
 	/// <param name="requestUri">The relative URI of the end point to query.</param>
@@ -140,11 +168,10 @@ public class Client(string apiKey, Blog blog) {
 		if (IsTest) body.Add("is_test", "1");
 		if (fields is not null) foreach (var field in fields) body.Add(field.Key, field.Value);
 
-		using var client = new HttpClient { BaseAddress = BaseUrl, Timeout = TimeSpan.FromMinutes(1) };
-		client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
+		using var request = new HttpRequestMessage(HttpMethod.Post, new Uri(BaseUrl, requestUri)) { Content = new FormUrlEncodedContent(body) };
+		request.Headers.Add("User-Agent", UserAgent);
 
-		using var content = new FormUrlEncodedContent(body);
-		var response = (await client.PostAsync(requestUri, content, cancellationToken)).EnsureSuccessStatusCode();
+		var response = (await httpClient.SendAsync(request, cancellationToken)).EnsureSuccessStatusCode();
 		var statusCode = HttpStatusCode.BadRequest;
 		if (response.Headers.TryGetValues("X-akismet-alert-msg", out var alertMessage)) throw new HttpRequestException(alertMessage.First(), inner: null, statusCode);
 		if (response.Headers.TryGetValues("X-akismet-debug-help", out var debugHelp)) throw new HttpRequestException(debugHelp.First(), inner: null, statusCode);
