@@ -4,7 +4,7 @@ namespace Belin.Akismet;
 /// Tests the features of the <see cref="Client"/> class.
 /// </summary>
 [TestClass]
-public sealed class ClientTests {
+public class ClientTests {
 
 	/// <summary>
 	/// The client used to query the remote API.
@@ -62,10 +62,10 @@ public sealed class ClientTests {
 
 	[TestMethod]
 	public async Task CheckComment() {
-		Assert.AreEqual(CheckResult.Ham, await client.CheckCommentAsync(ham, testContext.CancellationToken));
+		(await client.CheckCommentAsync(ham, testContext.CancellationToken)).ShouldBe(CheckResult.Ham);
 
 		var result = await client.CheckCommentAsync(spam, testContext.CancellationToken);
-		Assert.IsTrue(result == CheckResult.Spam || result == CheckResult.PervasiveSpam);
+		result.ShouldBeOneOf([CheckResult.Spam, CheckResult.PervasiveSpam]);
 	}
 
 	[TestMethod]
@@ -78,9 +78,9 @@ public sealed class ClientTests {
 
 	[TestMethod]
 	public async Task VerifyKey() {
-		Assert.IsTrue(await client.VerifyKeyAsync(testContext.CancellationToken));
+		(await client.VerifyKeyAsync(testContext.CancellationToken)).ShouldBeTrue();
 
 		var newClient = new Client("0123456789AB", client.Blog) { IsTest = true };
-		Assert.IsFalse(await newClient.VerifyKeyAsync(testContext.CancellationToken));
+		(await newClient.VerifyKeyAsync(testContext.CancellationToken)).ShouldBeFalse();
 	}
 }

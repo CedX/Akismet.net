@@ -8,7 +8,7 @@ using System.Text;
 /// Represents the front page or home URL transmitted when making requests.
 /// </summary>
 /// <param name="url">The blog or site URL.</param>
-public sealed class Blog(Uri url) {
+public class Blog(Uri url) {
 
 	/// <summary>
 	/// The character encoding for the values included in comments.

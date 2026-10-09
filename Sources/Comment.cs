@@ -6,7 +6,7 @@ using System.Collections;
 /// Represents a comment submitted by an author.
 /// </summary>
 /// <param name="author">The comment's author.</param>
-public sealed class Comment(Author author) {
+public class Comment(Author author) {
 
 	/// <summary>
 	/// The comment's author.
