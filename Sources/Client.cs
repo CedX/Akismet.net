@@ -12,7 +12,7 @@ public class Client(string apiKey, Blog blog): IDisposable {
 	/// <summary>
 	/// The response returned by the <c>submit-ham</c> and <c>submit-spam</c> endpoints when the outcome is a success.
 	/// </summary>
-	private const string Success = "Thanks for making the web a better place.";
+	private const string Thanks = "Thanks for making the web a better place.";
 
 	/// <summary>
 	/// The assembly version.
@@ -102,7 +102,7 @@ public class Client(string apiKey, Blog blog): IDisposable {
 	public async Task SubmitHamAsync(Comment comment, CancellationToken cancellationToken = default) {
 		using var response = await PostAsync("1.1/submit-ham", (Dictionary<string, string>) comment, cancellationToken);
 		var body = await response.Content.ReadAsStringAsync(cancellationToken);
-		if (body != Success) throw new HttpRequestException("Invalid server response.");
+		if (body != Thanks) throw new HttpRequestException("Invalid server response.");
 	}
 
 	/// <summary>
@@ -123,7 +123,7 @@ public class Client(string apiKey, Blog blog): IDisposable {
 	public async Task SubmitSpamAsync(Comment comment, CancellationToken cancellationToken = default) {
 		using var response = await PostAsync("1.1/submit-spam", (Dictionary<string, string>) comment, cancellationToken);
 		var body = await response.Content.ReadAsStringAsync(cancellationToken);
-		if (body != Success) throw new HttpRequestException("Invalid server response.");
+		if (body != Thanks) throw new HttpRequestException("Invalid server response.");
 	}
 
 	/// <summary>
