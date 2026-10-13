@@ -9,7 +9,7 @@ public class ClientTests {
 	/// <summary>
 	/// The client used to query the remote API.
 	/// </summary>
-	private readonly Client client;
+	private readonly Client client = new(Environment.GetEnvironmentVariable("AKISMET_API_KEY")!, "https://github.com/CedX/Akismet.net") { IsTest = true };
 
 	/// <summary>
 	/// A comment with content marked as ham.
@@ -31,7 +31,6 @@ public class ClientTests {
 	/// </summary>
 	/// <param name="testContext">The test context.</param>
 	public ClientTests(TestContext testContext) {
-		client = new Client(Environment.GetEnvironmentVariable("AKISMET_API_KEY")!, "https://github.com/CedX/Akismet.net") { IsTest = true };
 		this.testContext = testContext;
 
 		var author = new Author(ipAddress: "192.168.0.1") {
