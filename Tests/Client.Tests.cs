@@ -3,8 +3,9 @@ namespace Belin.Akismet;
 /// <summary>
 /// Tests the features of the <see cref="Client"/> class.
 /// </summary>
+/// <param name="testContext">The test context.</param>
 [TestClass]
-public class ClientTests {
+public class ClientTests(TestContext testContext) {
 
 	/// <summary>
 	/// The client used to query the remote API.
@@ -14,50 +15,31 @@ public class ClientTests {
 	/// <summary>
 	/// A comment with content marked as ham.
 	/// </summary>
-	private readonly Comment ham;
-
-	/// <summary>
-	/// A comment with content marked as spam.
-	/// </summary>
-	private readonly Comment spam;
-
-	/// <summary>
-	/// The test context.
-	/// </summary>
-	private readonly TestContext testContext;
-
-	/// <summary>
-	/// Creates a new test.
-	/// </summary>
-	/// <param name="testContext">The test context.</param>
-	public ClientTests(TestContext testContext) {
-		this.testContext = testContext;
-
-		var author = new Author(ipAddress: "192.168.0.1") {
+	private static readonly Comment ham = new(
+		new(ipAddress: "192.168.0.1") {
 			Name = "Akismet",
 			Role = AuthorRole.Administrator,
 			Url = new Uri("https://cedric-belin.fr"),
 			UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:156.0) Gecko/20100101 Firefox/156.0"
-		};
+		}) {
+		Content = "I'm testing out the Service API.",
+		Referrer = new Uri("https://www.nuget.org/packages/Belin.Akismet"),
+		Type = CommentType.Comment
+	};
 
-		ham = new Comment(author) {
-			Content = "I'm testing out the Service API.",
-			Referrer = new Uri("https://www.nuget.org/packages/Belin.Akismet"),
-			Type = CommentType.Comment
-		};
-
-		author = new Author(ipAddress: "127.0.0.1") {
+	/// <summary>
+	/// A comment with content marked as spam.
+	/// </summary>
+	private static readonly Comment spam = new(
+		new(ipAddress: "127.0.0.1") {
 			Email = "akismet-guaranteed-spam@example.com",
 			Name = "viagra-test-123",
 			UserAgent = "Spam Bot/6.6.6"
-		};
-
-		spam = new Comment(author) {
-			Content = "Spam!",
-			Date = DateTime.Now,
-			Type = CommentType.BlogPost
-		};
-	}
+		}) {
+		Content = "Spam!",
+		Date = DateTime.Now,
+		Type = CommentType.BlogPost
+	};
 
 	/// <summary>
 	/// Disposes the Akismet client.
