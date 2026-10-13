@@ -9,7 +9,7 @@ public class ClientTests {
 	/// <summary>
 	/// The client used to query the remote API.
 	/// </summary>
-	private readonly Client client = new(Environment.GetEnvironmentVariable("AKISMET_API_KEY")!, "https://github.com/CedX/Akismet.net") { IsTest = true };
+	private static readonly Client client = new(Environment.GetEnvironmentVariable("AKISMET_API_KEY")!, "https://github.com/CedX/Akismet.net") { IsTest = true };
 
 	/// <summary>
 	/// A comment with content marked as ham.
@@ -59,12 +59,16 @@ public class ClientTests {
 		};
 	}
 
+	/// <summary>
+	/// Disposes the Akismet client.
+	/// </summary>
+	[ClassCleanup]
+	public static void ClassCleanup() => client.Dispose();
+
 	[TestMethod]
 	public async Task CheckComment() {
 		(await client.CheckCommentAsync(ham, testContext.CancellationToken)).ShouldBe(CheckResult.Ham);
-
-		var result = await client.CheckCommentAsync(spam, testContext.CancellationToken);
-		result.ShouldBeOneOf([CheckResult.Spam, CheckResult.PervasiveSpam]);
+		(await client.CheckCommentAsync(spam, testContext.CancellationToken)).ShouldBeOneOf([CheckResult.Spam, CheckResult.PervasiveSpam]);
 	}
 
 	[TestMethod]
