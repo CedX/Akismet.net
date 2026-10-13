@@ -48,24 +48,24 @@ public class ClientTests(TestContext testContext) {
 	public static void ClassCleanup() => client.Dispose();
 
 	[TestMethod]
-	public async Task CheckComment() {
-		(await client.CheckCommentAsync(ham, testContext.CancellationToken)).ShouldBe(CheckResult.Ham);
-		(await client.CheckCommentAsync(spam, testContext.CancellationToken)).ShouldBeOneOf([CheckResult.Spam, CheckResult.PervasiveSpam]);
+	public void CheckComment() {
+		client.CheckComment(ham, testContext.CancellationToken).ShouldBe(CheckResult.Ham);
+		client.CheckComment(spam, testContext.CancellationToken).ShouldBeOneOf([CheckResult.Spam, CheckResult.PervasiveSpam]);
 	}
 
 	[TestMethod]
-	public async Task SubmitHam() =>
-		await client.SubmitHamAsync(ham, testContext.CancellationToken);
+	public void SubmitHam() =>
+		client.SubmitHam(ham, testContext.CancellationToken);
 
 	[TestMethod]
-	public async Task SubmitSpam() =>
-		await client.SubmitSpamAsync(spam, testContext.CancellationToken);
+	public void SubmitSpam() =>
+		client.SubmitSpam(spam, testContext.CancellationToken);
 
 	[TestMethod]
-	public async Task VerifyKey() {
-		(await client.VerifyKeyAsync(testContext.CancellationToken)).ShouldBeTrue();
+	public void VerifyKey() {
+		client.VerifyKey(testContext.CancellationToken).ShouldBeTrue();
 
 		var newClient = new Client("0123456789AB", client.Blog) { IsTest = true };
-		(await newClient.VerifyKeyAsync(testContext.CancellationToken)).ShouldBeFalse();
+		newClient.VerifyKey(testContext.CancellationToken).ShouldBeFalse();
 	}
 }
