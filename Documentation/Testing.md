@@ -13,14 +13,10 @@ If you receive anything else, something is wrong in your client, data, or commun
 ```csharp
 using Belin.Akismet;
 
-var author = new Author(ipAddress: "127.0.0.1") {
-  Name = "viagra-test-123",
-  UserAgent = "Mozilla/5.0"
-};
-
-using var client = new Client("123YourAPIKey", "https://www.yourblog.com");
+var author = new Author(ipAddress: "127.0.0.1") { Name = "viagra-test-123", UserAgent = "Mozilla/5.0" };
 var comment = new Comment(author) { Content = "A user comment." };
 
+using var client = new Client("123YourAPIKey", "https://www.yourblog.com");
 var result = await client.CheckCommentAsync(comment);
 Console.WriteLine($"It should be `CheckResult.Spam`: {result}");
 ```
@@ -34,14 +30,10 @@ The Akismet API will always return a `CheckResult.Ham` response. Any other respo
 ```csharp
 using Belin.Akismet;
 
-var author = new Author(ipAddress: "127.0.0.1") {
-  Role = AuthorRole.Administrator,
-  UserAgent = "Mozilla/5.0"
-};
-
-using var client = new Client("123YourAPIKey", "https://www.yourblog.com");
+var author = new Author(ipAddress: "127.0.0.1") { Role = AuthorRole.Administrator, UserAgent = "Mozilla/5.0" };
 var comment = new Comment(author) { Content = "A user comment." };
 
+using var client = new Client("123YourAPIKey", "https://www.yourblog.com");
 var result = await client.CheckCommentAsync(comment);
 Console.WriteLine($"It should be `CheckResult.Ham`: {result}");
 ```
