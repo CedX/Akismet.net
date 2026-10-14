@@ -1,6 +1,6 @@
 # Changelog
 
-## Version [2026.10.0](https://github.com/CedX/Akismet.net/compare/v6.0.0...v2026.10.0)
+## Version [2026.11.0](https://github.com/CedX/Akismet.net/compare/v6.0.0...v2026.11.0)
 - Removed the `sealed` modifier from the classes.
 - Switched to a year-based versioning.
 
