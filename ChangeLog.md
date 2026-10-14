@@ -1,5 +1,9 @@
 # Changelog
 
+## Version [2026.10.0](https://github.com/CedX/Akismet.net/compare/v6.0.0...v2026.10.0)
+- Removed the `sealed` modifier from the classes.
+- Switched to a year-based versioning.
+
 ## Version [6.0.0](https://github.com/CedX/Akismet.net/compare/v5.2.1...v6.0.0)
 - Breaking change: the `Client` class now implements the `IDisposable` interface.
 - Uses a single HTTP client instance to make all requests.
