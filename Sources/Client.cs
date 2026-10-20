@@ -162,7 +162,7 @@ public class Client(string apiKey, Blog blog): IDisposable {
 	/// <param name="cancellationToken">The token to cancel the operation.</param>
 	/// <returns>The server response.</returns>
 	/// <exception cref="HttpRequestException">An error occurred while querying the end point.</exception>
-	private async Task<HttpResponseMessage> PostAsync(string requestUri, IDictionary<string, string>? fields = null, CancellationToken cancellationToken = default) {
+	private async Task<HttpResponseMessage> PostAsync(string requestUri, Dictionary<string, string>? fields = null, CancellationToken cancellationToken = default) {
 		var body = (Dictionary<string, string>) Blog;
 		body.Add("api_key", ApiKey);
 		if (IsTest) body.Add("is_test", "1");
