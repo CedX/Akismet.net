@@ -21,7 +21,7 @@ public class Comment(Author author) {
 	/// <summary>
 	/// The context in which this comment was posted.
 	/// </summary>
-	public IList<string> Context { get; set; } = [];
+	public List<string> Context { get; set; } = [];
 
 	/// <summary>
 	/// The UTC timestamp of the creation of the comment.

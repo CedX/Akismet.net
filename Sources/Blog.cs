@@ -18,7 +18,7 @@ public class Blog(Uri url) {
 	/// <summary>
 	/// The languages in use on the blog or site, in ISO 639-1 format.
 	/// </summary>
-	public IList<string> Languages { get; set; } = [];
+	public List<string> Languages { get; set; } = [];
 
 	/// <summary>
 	/// The blog or site URL.
