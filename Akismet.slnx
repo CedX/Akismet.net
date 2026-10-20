@@ -1,4 +1,4 @@
-<Solution ProjectVersion="2026.11.0">
+<Solution ProjectVersion="2026.12.0">
 	<Project Path="Sources/Akismet.csproj" />
 	<Project Path="Tests/Akismet.Tests.csproj">
 		<Build Solution="Release|*" Project="false" />
