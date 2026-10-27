@@ -1,10 +1,6 @@
 name: ContinuousIntegration
 on: push
 
-defaults:
-  run:
-    shell: pwsh
-
 jobs:
   Test:
     runs-on: windows-latest
@@ -15,9 +11,7 @@ jobs:
         uses: actions/setup-dotnet@v6
         with:
           dotnet-version: 10
-      - name: Install dependencies
-        run: ./Invoke.ps1 Install
       - name: Run tests
-        run: ./Invoke.ps1 Test
+        run: dotnet Scripts/Test.cs
         env:
           AKISMET_API_KEY: ${{secrets.AKISMET_API_KEY}}
