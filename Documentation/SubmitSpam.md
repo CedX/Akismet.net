@@ -10,7 +10,7 @@ you should ensure that the values that you do send match those of the original c
 See the [Akismet API documentation](https://akismet.com/developers/detailed-docs/submit-spam-missed-spam) for more information.
 
 ```csharp
-Task Client.SubmitSpamAysnc(Comment comment, CancellationToken cancellationToken = default)
+Task Client.SubmitSpamAsync(Comment comment, CancellationToken cancellationToken = default)
 ```
 
 ## Parameters
